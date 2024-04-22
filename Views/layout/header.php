@@ -7,8 +7,8 @@
 <body>
     <header>
         <nav>
-            <h1>INMOBILIARIA EXTRAORDINARIA</h1>
-            <h2>Plataforma del empleado</h2>
+            <h1>MONEDERO</h1>
+            <h2>ADMINISTRA TU POBREZA</h2>
         </div>
     </header>
 </body>
