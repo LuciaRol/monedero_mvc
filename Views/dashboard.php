@@ -8,19 +8,19 @@
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <header>
-        <h1>MONEDERO</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Acerca de</a></li>
-            <li><a href="#">Contacto</a></li>
-        </ul>
-    </nav>
-    <section>
+       <section>
         <h2>Contenido principal</h2>
         <p>Este es un espacio donde puedes empezar a agregar tu contenido principal.</p>
+        
+        
+        <?php
+        
+        // Crear una instancia del controlador
+        $dashboardController = new Controllers\DashboardController();
+
+        // Llamar a la función para mostrar los Movimientos guardados
+        $dashboardController->mostrarMovimientosGuardados();
+        ?>
     </section>
     <footer>
         <p>Derechos de autor &copy; 2024 | Nombre de tu empresa</p>
