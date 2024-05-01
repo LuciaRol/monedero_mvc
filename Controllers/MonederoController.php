@@ -3,8 +3,8 @@ namespace Controllers;
 
 use Lib\Pages;
 use Models\Monedero;
-class DashboardController {
-    public function mostrarDashboard():void {
+class MonederoController {
+    public function mostrarMonedero():void {
         $pagina = new Pages();
         $pagina->render("mostrarMonedero");
     }
