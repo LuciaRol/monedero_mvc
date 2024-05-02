@@ -1,4 +1,16 @@
+<?php
+    // Incluir el controlador
+    use Controllers\MonederoController;
 
+    // Crear una instancia del controlador
+    $monederoController = new MonederoController();
+
+    // Llamar al método mostrarMonedero() del controlador para mostrar los registros
+    $monederoController->mostrarMonedero();
+    
+  
+
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,16 +22,35 @@
 </head>
 
 <body>
-    
+
             
     
     <table>
-        <tr>
-            <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Concepto</a></th>
-            <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Fecha</a></th>
-            <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Importe (&euro;)</a></th>
-            <th>Operaciones</th>
-        </tr>
+    <tr>
+    <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Concepto</a></th>
+    <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Fecha</a></th>
+    <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Importe (&euro;)</a></th>
+    <th>Operaciones</th>
+</tr>
+
+<?php foreach ($registros as $registro): ?>
+    <tr>
+        <td><?= $registro['concepto'] ?></td>
+        <td><?= $registro['fecha'] ?></td>
+        <td><?= $registro['importe'] ?></td>
+        <td>
+            <div class="btn">
+                <form action="<?= BASE_URL ?>controller=Monedero&action=" method="post">
+                    <button name="editar" value="<?= $array['id'] ?>">Editar</button>
+                </form>
+                <form action="<?= BASE_URL ?>controller=Monedero&action=" method="POST">
+                    <button name="borrar" value="<?= $array['id'] ?>">Borrar</button>
+                </form>
+            </div>
+            <button name="modificar">Modificar</button>
+        </td>
+    </tr>
+<?php endforeach; ?>
 
         <tr>
             <form action="<?= BASE_URL ?>controller=Monedero&action=editar" method="POST">

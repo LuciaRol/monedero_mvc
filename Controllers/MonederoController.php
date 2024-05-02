@@ -8,10 +8,31 @@ class MonederoController {
         // Leer los datos del archivo monedero.txt
         $registros = $this->leerRegistros();
 
+        
         // Instanciar la clase Pages para renderizar la vista
         $pagina = new Pages();
         $pagina->render("mostrarMonedero", ['registros' => $registros]);
     }
+    ////////////////////////////////////////FUNCION PARA BORRAR//////////////////////
+    // Función para mostrar los registros
+    // public function mostrarRegistros($registros) {
+    //     // Mostrar los registros en una tabla
+    //     if (!empty($registros)) {
+    //         echo '<table border="1">';
+    //         echo '<tr><th>Concepto</th><th>Fecha</th><th>Importe (&euro;)</th></tr>';
+    //         foreach ($registros as $registro) {
+    //             echo '<tr>';
+    //             echo '<td>' . $registro['concepto'] . '</td>';
+    //             echo '<td>' . $registro['fecha'] . '</td>';
+    //             echo '<td>' . $registro['importe'] . '</td>';
+    //             echo '</tr>';
+    //         }
+    //         echo '</table>';
+    //     } else {
+    //         echo '<p>No hay registros.</p>';
+    //     }
+    // }
+    ////////////////////////////////////////FUNCION PARA BORRAR//////////////////////
 
     public function guardarRegistro(): void {
         // Verificar si se han enviado los datos del formulario
@@ -30,7 +51,9 @@ class MonederoController {
             // Cerrar el archivo
             fclose($archivo);
             
+            // Redirigir al usuario a la página mostrarMonedero.php después de guardar el registro
             self::mostrarMonedero();
+            
 
         } else {
             // Si no se han enviado los datos del formulario, puedes manejarlo de acuerdo a tus necesidades,
@@ -41,7 +64,7 @@ class MonederoController {
         }
     }
 
-    private function leerRegistros(): array {
+    public function leerRegistros(): array {
         // Leer el contenido del archivo monedero.txt si existe
         if (file_exists("monedero.txt")) {
             // Leer el contenido del archivo y dividirlo en líneas
