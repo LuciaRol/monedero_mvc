@@ -37,6 +37,22 @@ class MonederoController {
     public function guardarRegistro(): void {
         // Verificar si se han enviado los datos del formulario
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
+            // Leer los registros actuales para obtener el último ID y calcular el siguiente ID
+            $registros = $this->leerRegistros();
+            $ultimoId = 0;
+
+            // Calcular el último ID
+            foreach ($registros as $registro) {
+                $id = intval($registro['id']);
+                if ($id > $ultimoId) {
+                    $ultimoId = $id;
+                }
+            }
+
+            // Calcular el siguiente ID
+            $id = $ultimoId + 1;
+
+    
             // Obtener los datos del formulario
             $concepto = $_POST["concepto"];
             $fecha = $_POST["fecha"];
@@ -45,16 +61,14 @@ class MonederoController {
             // Abrir el archivo en modo escritura (si no existe, se creará)
             $archivo = fopen("monedero.txt", "a");
     
-            // Escribir los datos del formulario en el archivo
-            fwrite($archivo, "$concepto,$fecha,$importe\n");
+            // Escribir los datos del formulario junto con el ID en el archivo
+            fwrite($archivo, "$id,$concepto,$fecha,$importe\n");
     
             // Cerrar el archivo
             fclose($archivo);
-            
+    
             // Redirigir al usuario a la página mostrarMonedero.php después de guardar el registro
             self::mostrarMonedero();
-            
-
         } else {
             // Si no se han enviado los datos del formulario, puedes manejarlo de acuerdo a tus necesidades,
             // como mostrar un mensaje de error o redirigir al usuario a otra página.
@@ -75,9 +89,10 @@ class MonederoController {
             foreach ($lineas as $linea) {
                 $datos = explode(",", $linea);
                 $registros[] = [
-                    'concepto' => $datos[0],
-                    'fecha' => $datos[1],
-                    'importe' => $datos[2]
+                    'id' => $datos[0],
+                    'concepto' => $datos[1],
+                    'fecha' => $datos[2],
+                    'importe' => $datos[3]
                 ];
             }
 
@@ -85,5 +100,43 @@ class MonederoController {
         } else {
             return [];
         }
+    }
+
+    public function borrarRegistro(): void {
+        // Verificar si se ha enviado el ID del registro a borrar
+    if (isset($_POST['borrar'])) {
+        // Obtener el ID del registro a borrar desde el POST
+        $id = $_POST['borrar'];
+        
+        // Leer los registros actuales del archivo
+        $registros = $this->leerRegistros();
+
+        // Buscar el registro con el ID proporcionado
+        $registroEncontrado = null;
+        foreach ($registros as $key => $registro) {
+            if ($registro['id'] == $id) {
+                $registroEncontrado = $key;
+                break;
+            }
+        }
+
+        // Si se encuentra el registro, eliminarlo del array de registros
+        if ($registroEncontrado !== null) {
+            unset($registros[$registroEncontrado]);
+
+            // Reindexar el array para evitar posibles inconsistencias de índices
+            $registros = array_values($registros);
+
+            // Escribir los registros actualizados de vuelta al archivo
+            $archivo = fopen("monedero.txt", "w");
+            foreach ($registros as $registro) {
+                fwrite($archivo, implode(",", $registro) . "\n");
+            }
+            fclose($archivo);
+        }
+    }
+
+    // Redirigir al usuario de vuelta a la página mostrarMonedero.php después de borrar el registro
+    self::mostrarMonedero();
     }
 }

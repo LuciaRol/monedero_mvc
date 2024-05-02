@@ -43,30 +43,16 @@
                 <form action="<?= BASE_URL ?>controller=Monedero&action=" method="post">
                     <button name="editar" value="<?= $array['id'] ?>">Editar</button>
                 </form>
-                <form action="<?= BASE_URL ?>controller=Monedero&action=" method="POST">
-                    <button name="borrar" value="<?= $array['id'] ?>">Borrar</button>
+                <form action="<?= BASE_URL ?>index.php?action=borrarRegistro" method="POST">
+                    <button name="borrar" value="<?= $registro['id'] ?>">Borrar</button>
                 </form>
             </div>
-            <button name="modificar">Modificar</button>
+            
         </td>
     </tr>
 <?php endforeach; ?>
 
-        <tr>
-            <form action="<?= BASE_URL ?>controller=Monedero&action=editar" method="POST">
-                <td>
-                    <div class="btn">
-                        <form action="<?= BASE_URL ?>controller=Monedero&action=" method="post">
-                            <button name="editar" value="<?= $array['id'] ?>">Editar</button>
-                        </form>
-                        <form action="<?= BASE_URL ?>controller=Monedero&action=" method="POST">
-                            <button name="borrar" value="<?= $array['id'] ?>">Borrar</button>
-                        </form>
-                    </div>
-                    <button name="modificar">Modificar</button>
-                </td>
-            </form>
-        </tr>
+ 
                 
         
         <form action="index.php?action=guardarRegistro" method="POST">
