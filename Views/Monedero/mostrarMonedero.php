@@ -43,7 +43,7 @@
                 <form action="<?= BASE_URL ?>controller=Monedero&action=" method="post">
                     <button name="editar" value="<?= $array['id'] ?>">Editar</button>
                 </form>
-                <form action="<?= BASE_URL ?>index.php?action=borrarRegistro" method="POST">
+                <form action="index.php?action=borrarRegistro" method="POST">
                     <button name="borrar" value="<?= $registro['id'] ?>">Borrar</button>
                 </form>
             </div>
@@ -76,7 +76,7 @@
 
     <div id="buscarConcepto">
         <p>Buscar por concepto: </p>
-        <form action="<?= BASE_URL ?>controller=Monedero&action=" method="POST">
+        <form action="index.php?action=buscarRegistro" method="POST">
             <input type="text" name="buscar">
             <button type="submit">Buscar</button>
         </form>

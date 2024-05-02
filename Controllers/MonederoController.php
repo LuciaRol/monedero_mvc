@@ -139,4 +139,32 @@ class MonederoController {
     // Redirigir al usuario de vuelta a la página mostrarMonedero.php después de borrar el registro
     self::mostrarMonedero();
     }
+
+    public function buscarRegistro(): void {
+        // Verificar si se ha enviado la consulta de búsqueda
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["buscar"])) {
+            // Obtener el término de búsqueda
+            $terminoBusqueda = $_POST["buscar"];
+    
+            // Leer los registros actuales para realizar la búsqueda
+            $registros = $this->leerRegistros();
+    
+            // Filtrar los registros que coincidan con el término de búsqueda en el concepto
+            $resultados = [];
+            foreach ($registros as $registro) {
+                if (stripos($registro['concepto'], $terminoBusqueda) !== false) {
+                    $resultados[] = $registro;
+                }
+            }
+    
+            // Instanciar la clase Pages para renderizar la vista
+            $pagina = new Pages();
+            $pagina->render("mostrarMonedero", ['registros' => $resultados]);
+        } else {
+            // Si no se ha enviado la consulta de búsqueda, puedes manejarlo de acuerdo a tus necesidades
+            // Por ejemplo, puedes redirigir al usuario a otra página
+            // header("Location: otra_pagina.php");
+            // exit();
+        }
+    }
 }
