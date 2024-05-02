@@ -39,15 +39,15 @@
         <tr>
             <form action="<?= BASE_URL ?>controller=Monedero&action=" method="POST">
                 <td>
-                    <input type="text" name="concept" value="">
+                    <input type="text" name="concepto" value="">
                     <p class="error"></p>
                 </td>
                 <td>
-                    <input type="text" name="date" value="">
+                    <input type="text" name="fecha" value="">
                     <p class="error"></p>
                 </td>
                 <td>
-                    <input type="text" name="import" value="">
+                    <input type="text" name="importe" value="">
                     <p class="error"></p>
                 </td>
                 <td><button>Añadir registro</button></td>
@@ -55,10 +55,10 @@
         </tr>
     </table>
 
-    <div id="buscar">
+    <div id="buscarConcepto">
         <p>Buscar por concepto: </p>
-        <form action="<?= BASE_URL ?>controller=Monedero&action=search" method="POST">
-            <input type="text" name="search">
+        <form action="<?= BASE_URL ?>controller=Monedero&action=" method="POST">
+            <input type="text" name="buscar">
             <button type="submit">Buscar</button>
         </form>
     </div>
@@ -69,7 +69,7 @@
            
             <p>El balance total es de &euro;</p>
         </div>
-        <button><a href="<?= BASE_URL ?>">Ver todas las anotaciones</a></button>
+        <button><a href="<?= BASE_URL?>">Ver todas las anotaciones</a></button>
     </div>
 
 </body>
