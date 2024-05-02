@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,23 +38,23 @@
         </tr>
                 
         
-        <tr>
-            <form action="<?= BASE_URL ?>controller=Monedero&action=" method="POST">
-                <td>
-                    <input type="text" name="concepto" value="">
-                    <p class="error"></p>
-                </td>
-                <td>
-                    <input type="text" name="fecha" value="">
-                    <p class="error"></p>
-                </td>
-                <td>
-                    <input type="text" name="importe" value="">
-                    <p class="error"></p>
-                </td>
-                <td><button>Añadir registro</button></td>
-            </form>
-        </tr>
+        <form action="index.php?action=guardarRegistro" method="POST">
+            <td>
+                <input type="text" name="concepto" placeholder="Concepto">
+                <p class="error"></p>
+            </td>
+            <td>
+                <input type="text" name="fecha" placeholder="Fecha">
+                <p class="error"></p>
+            </td>
+            <td>
+                <input type="text" name="importe" placeholder="Importe">
+                <p class="error"></p>
+            </td>
+            <td>
+                <button type="submit">Añadir registro</button>
+            </td>
+        </form>
     </table>
 
     <div id="buscarConcepto">
