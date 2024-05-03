@@ -88,7 +88,8 @@
            
             <p>El balance total es de &euro;</p>
         </div>
-        <button><a href="<?= BASE_URL?>">Ver todas las anotaciones</a></button>
+        <button><a href="index.php?action=verTodasAnotaciones">Ver todas las anotaciones</a></button>
+
     </div>
 
 </body>

@@ -13,26 +13,7 @@ class MonederoController {
         $pagina = new Pages();
         $pagina->render("mostrarMonedero", ['registros' => $registros]);
     }
-    ////////////////////////////////////////FUNCION PARA BORRAR//////////////////////
-    // Función para mostrar los registros
-    // public function mostrarRegistros($registros) {
-    //     // Mostrar los registros en una tabla
-    //     if (!empty($registros)) {
-    //         echo '<table border="1">';
-    //         echo '<tr><th>Concepto</th><th>Fecha</th><th>Importe (&euro;)</th></tr>';
-    //         foreach ($registros as $registro) {
-    //             echo '<tr>';
-    //             echo '<td>' . $registro['concepto'] . '</td>';
-    //             echo '<td>' . $registro['fecha'] . '</td>';
-    //             echo '<td>' . $registro['importe'] . '</td>';
-    //             echo '</tr>';
-    //         }
-    //         echo '</table>';
-    //     } else {
-    //         echo '<p>No hay registros.</p>';
-    //     }
-    // }
-    ////////////////////////////////////////FUNCION PARA BORRAR//////////////////////
+    
 
     public function guardarRegistro(): void {
         // Verificar si se han enviado los datos del formulario
@@ -166,5 +147,14 @@ class MonederoController {
             // header("Location: otra_pagina.php");
             // exit();
         }
+    }
+
+    public function verTodasAnotaciones(): void {
+        // Leer todos los registros
+        $registros = $this->leerRegistros();
+    
+        // Instanciar la clase Pages para renderizar la vista
+        $pagina = new Pages();
+        $pagina->render("mostrarMonedero", ['registros' => $registros]);
     }
 }
