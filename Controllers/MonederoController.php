@@ -63,33 +63,13 @@ class MonederoController {
     }
 
     public function contarTotalRegistros(): int {
-        // Leer el contenido del archivo monedero.txt si existe
-        if (file_exists("monedero.txt")) {
-            // Leer el contenido del archivo y dividirlo en líneas
-            $lineas = file("monedero.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    
-            // Contar el número de registros (líneas)
-            $totalRegistros = count($lineas);
-    
-            return $totalRegistros;
-        } else {
-            return 0;
-        }
+        // Llamar a la función contarTotalRegistros() de Monedero
+        return Monedero::contarTotalRegistros();
     }
 
     public function calcularBalanceTotal(): float {
-        // Leer los registros del archivo monedero.txt
-        $registros = monedero::leerRegistros();
-        
-        // Inicializar la variable para almacenar el balance total
-        $balanceTotal = 0.0;
-    
-        // Sumar los importes de todos los registros
-        foreach ($registros as $registro) {
-            $balanceTotal += floatval($registro['importe']);
-        }
-    
-        return $balanceTotal;
+        // Llamar a la función calcularBalanceTotal() de Monedero
+        return Monedero::calcularBalanceTotal();
     }
 
 }
