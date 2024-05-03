@@ -179,12 +179,44 @@ class MonederoController {
         return $balanceTotal;
     }
 
-    public function verTodasAnotaciones(): void {
-        // Leer todos los registros
-        $registros = $this->leerRegistros();
+    public function editarRegistro(): void {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"], $_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
+            // Obtener el ID del registro y los datos enviados desde el formulario
+            $id = $_POST["id"];
+            $concepto = $_POST["concepto"];
+            $fecha = $_POST["fecha"];
+            $importe = $_POST["importe"];
     
-        // Instanciar la clase Pages para renderizar la vista
-        $pagina = new Pages();
-        $pagina->render("mostrarMonedero", ['registros' => $registros]);
+            // Leer los registros actuales del archivo
+            $registros = $this->leerRegistros();
+    
+            // Buscar el registro con el ID proporcionado
+            foreach ($registros as &$registro) {
+                if ($registro['id'] == $id) {
+                    // Actualizar los datos del registro
+                    $registro['concepto'] = $concepto;
+                    $registro['fecha'] = $fecha;
+                    $registro['importe'] = $importe;
+                    break;
+                }
+            }
+    
+            // Escribir los registros actualizados de vuelta al archivo
+            $archivo = fopen("monedero.txt", "w");
+            foreach ($registros as $registro) {
+                fwrite($archivo, implode(",", $registro) . "\n");
+            }
+            fclose($archivo);
+    
+            // Redirigir al usuario de vuelta a la página mostrarMonedero.php después de borrar el registro
+            self::mostrarMonedero();
+        } else {
+            // Si no se han enviado los datos del formulario, puedes manejarlo de acuerdo a tus necesidades
+            // Por ejemplo, redirigir al usuario a otra página
+            // header("Location: otra_pagina.php");
+            // exit();
+        }
     }
+    
+   
 }
