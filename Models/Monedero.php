@@ -182,14 +182,14 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
     
         // Comprobamos si el concepto está vacío
         if (empty($concepto)) {
-            $errores['concepto'] = "El concepto no puede estar vacío.";
+            $errores['concepto'] = "No se puede dar de alta el registro: es obligatorio introducir el concepto";
         }
     
-        // Comprobamos si la fecha tiene un formato válido
-        if (!strtotime($fecha)) {
-            $errores[] = "La fecha no tiene un formato válido.";
+         // Comprobamos si la fecha tiene un formato válido ('d/m/aaaa')
+        $fechaParts = explode('/', $fecha);
+        if (count($fechaParts) !== 3 || !checkdate($fechaParts[1], $fechaParts[0], $fechaParts[2])) {
+            $errores[] = "No se puede dar de alta el registro: la fecha debe tener el formato 'd/m/aaaa'.";
         }
-    
         // Comprobamos si el importe es un número válido
         if (!is_numeric($importe)) {
             $errores[] = "El importe debe ser un número.";

@@ -21,6 +21,10 @@ class MonederoController {
             $fecha = $_POST["fecha"];
             $importe = $_POST["importe"];
             
+            // Aquí tiene que ir el saneamiento
+            // Monedero::sanearCampos($concepto, $fecha, $importe);
+
+
             // Aquí tiene que ir toda la validación 
             $errores = Monedero::validacion($concepto, $fecha, $importe);
             
@@ -30,8 +34,6 @@ class MonederoController {
                 return;
                 }
            
-            // Aquí tiene que ir el saneamiento
-            // Monedero::sanearCampos($concepto, $fecha, $importe);
             // Llamar a la función guardarRegistro() de Monedero para guardar el registro
             Monedero::guardarRegistro($concepto, $fecha, $importe);
 
