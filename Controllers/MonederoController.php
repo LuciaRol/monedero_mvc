@@ -54,25 +54,12 @@ class MonederoController {
             $terminoBusqueda = $_POST["buscar"];
     
             // Leer los registros actuales para realizar la búsqueda
-            $registros = monedero::leerRegistros();
+            $resultados = Monedero::buscarRegistros($terminoBusqueda);
     
-            // Filtrar los registros que coincidan con el término de búsqueda en el concepto
-            $resultados = [];
-            foreach ($registros as $registro) {
-                if (stripos($registro['concepto'], $terminoBusqueda) !== false) {
-                    $resultados[] = $registro;
-                }
-            }
-    
-            // Instanciar la clase Pages para renderizar la vista
+           // Instanciar la clase Pages para renderizar la vista
             $pagina = new Pages();
             $pagina->render("mostrarMonedero", ['registros' => $resultados]);
-        } else {
-            // Si no se ha enviado la consulta de búsqueda, puedes manejarlo de acuerdo a tus necesidades
-            // Por ejemplo, puedes redirigir al usuario a otra página
-            // header("Location: otra_pagina.php");
-            // exit();
-        }
+        } 
     }
 
     public function contarTotalRegistros(): int {

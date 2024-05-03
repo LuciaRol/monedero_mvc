@@ -131,4 +131,20 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
         }
     }
 
+    public static function buscarRegistros(string $terminoBusqueda): array {
+        // Leer los registros actuales para realizar la búsqueda
+        $registros = self::leerRegistros();
+
+        // Filtrar los registros que coincidan con el término de búsqueda en el concepto
+        $resultados = [];
+        foreach ($registros as $registro) {
+            if (stripos($registro['concepto'], $terminoBusqueda) !== false) {
+                $resultados[] = $registro;
+            }
+        }
+
+        return $resultados;
+    }
+
+
 }
