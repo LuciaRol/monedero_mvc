@@ -67,7 +67,18 @@
                 <button type="submit">Añadir registro</button>
             </td>
         </form>
+
+
     </table>
+    <div id="error-messages">
+        <?php if (!empty($errores)): ?>
+            <ul>
+                <?php foreach ($errores as $error): ?>
+                    <li><?= $error ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
 
     <div id="buscarConcepto">
         <p>Buscar por concepto: </p>

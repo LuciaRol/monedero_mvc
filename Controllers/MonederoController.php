@@ -4,7 +4,7 @@ namespace Controllers;
 use Lib\Pages;
 use Models\Monedero;
 class MonederoController {
-    public function mostrarMonedero(): void {
+    public function mostrarMonedero(array $errores = null): void {
         // Leer los datos del archivo monedero.txt
         
         $registros = monedero::leerRegistros();
@@ -12,7 +12,7 @@ class MonederoController {
         
         // Instanciar la clase Pages para renderizar la vista
         $pagina = new Pages();
-        $pagina->render("mostrarMonedero", ['registros' => $registros]);
+        $pagina->render("mostrarMonedero", ['registros' => $registros, 'errores' => $errores]);
     }
     public function guardarRegistro(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
@@ -22,9 +22,16 @@ class MonederoController {
             $importe = $_POST["importe"];
             
             // Aquí tiene que ir toda la validación 
-
+            $errores = Monedero::validacion($concepto, $fecha, $importe);
+            
+            // Si hay errores de validación, mostrar los mensajes de error y detener el proceso
+            if ($errores !== null) {
+                $this->mostrarMonedero($errores); // Pasar los mensajes de error a la vista
+                return;
+                }
+           
             // Aquí tiene que ir el saneamiento
-
+            // Monedero::sanearCampos($concepto, $fecha, $importe);
             // Llamar a la función guardarRegistro() de Monedero para guardar el registro
             Monedero::guardarRegistro($concepto, $fecha, $importe);
 

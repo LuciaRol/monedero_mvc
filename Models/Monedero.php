@@ -176,4 +176,74 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
         return $balanceTotal;
     }
 
+    public static function validacion($concepto, $fecha, $importe) {
+        // Inicializamos un array para almacenar mensajes de error
+        $errores = [];
+    
+        // Comprobamos si el concepto está vacío
+        if (empty($concepto)) {
+            $errores['concepto'] = "El concepto no puede estar vacío.";
+        }
+    
+        // Comprobamos si la fecha tiene un formato válido
+        if (!strtotime($fecha)) {
+            $errores[] = "La fecha no tiene un formato válido.";
+        }
+    
+        // Comprobamos si el importe es un número válido
+        if (!is_numeric($importe)) {
+            $errores[] = "El importe debe ser un número.";
+        }
+    
+        // Si hay errores, devolvemos un array con los mensajes de error
+        if (!empty($errores)) {
+            return $errores;
+        }
+    
+        return;
+    }
+
+
+    public static function sanearCampos($concepto, $fecha, $importe): array {
+        // Aplicar trim a todos los campos para eliminar espacios en blanco al inicio y al final
+        $concepto = trim($concepto);
+        $fecha = trim($fecha);
+        $importe = trim($importe);
+    
+        // Sanear el concepto: filtrar solo letras (mayúsculas y minúsculas), números y espacios, eliminando otros caracteres
+        $concepto = self::sanearString($concepto);
+    
+        // Sanear la fecha
+        $fecha = self::sanearFecha($fecha);
+    
+        // Sanear el importe: eliminar todos los caracteres excepto los dígitos y el signo de puntuación para permitir números decimales
+        $importe = filter_var($importe, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $importe = floatval($importe);
+    
+        return ['concepto' => $concepto, 'fecha' => $fecha, 'importe' => $importe];
+    }
+    
+    // Función para sanear strings
+    public static function sanearString(string $texto): string {
+        // Filtrar solo letras (mayúsculas y minúsculas), números y espacios, eliminando otros caracteres
+        return preg_replace('/[^A-Za-z0-9\s]+/', '', $texto);
+    }
+
+    public static function sanearFecha($fecha): string {
+        // Intentamos convertir la fecha a un formato UNIX timestamp
+        $timestamp = strtotime($fecha);
+    
+        // Verificamos si se pudo convertir correctamente
+        if ($timestamp !== false) {
+            // Creamos un objeto DateTime utilizando el timestamp
+            $fecha_parseada = new DateTime();
+            $fecha_parseada->setTimestamp($timestamp);
+    
+            // Devolvemos la fecha formateada como 'YYYY-MM-DD'
+            return $fecha_parseada->format('Y-m-d');
+        } else {
+            // Si la conversión falla, devolvemos una cadena vacía
+            return '';
+        }
+    }
 }
