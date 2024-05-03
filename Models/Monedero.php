@@ -2,7 +2,7 @@
 
 namespace Models;
 use DateTime;
-
+use Lib\Pages;
 
 class monedero{
     private string $concepto;
@@ -52,21 +52,83 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
         $this->todosLosDatos = $todosLosDatos;
     }
 
-    public function obtenerSaldoTotal(){
-        // meter lógica
+    
+    public static function leerRegistros(): array {
+        // Leer el contenido del archivo monedero.txt si existe
+        if (file_exists("monedero.txt")) {
+            // Leer el contenido del archivo y dividirlo en líneas
+            $lineas = file("monedero.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+            // Procesar cada línea para obtener los datos individuales
+            $registros = [];
+            foreach ($lineas as $linea) {
+                $datos = explode(",", $linea);
+                $registros[] = [
+                    'id' => $datos[0],
+                    'concepto' => $datos[1],
+                    'fecha' => $datos[2],
+                    'importe' => $datos[3]
+                ];
+            }
+
+            return $registros;
+        } else {
+            return [];
+        }
+    }
+    public static function guardarRegistro(string $concepto, string $fecha, float $importe): void {
+        // Leer los registros actuales para obtener el último ID y calcular el siguiente ID
+        $registros = self::leerRegistros();
+        $ultimoId = 0;
+
+        // Calcular el último ID
+        foreach ($registros as $registro) {
+            $id = intval($registro['id']);
+            if ($id > $ultimoId) {
+                $ultimoId = $id;
+            }
+        }
+
+        // Calcular el siguiente ID
+        $id = $ultimoId + 1;
+
+        // Abrir el archivo en modo escritura (si no existe, se creará)
+        $archivo = fopen("monedero.txt", "a");
+
+        // Escribir los datos del formulario junto con el ID en el archivo
+        fwrite($archivo, "$id,$concepto,$fecha,$importe\n");
+
+        // Cerrar el archivo
+        fclose($archivo);
     }
 
-    public function registrarGasto($concepto, $importe){
-        //meter lógica
-    }
+    public static function borrarRegistro(int $id): void {
+        // Leer los registros actuales del archivo
+        $registros = self::leerRegistros();
 
-    public function registrarIngreso($concepto, $importe){
-        //meter lógica
-    }
+        // Buscar el registro con el ID proporcionado
+        $registroEncontrado = null;
+        foreach ($registros as $key => $registro) {
+            if ($registro['id'] == $id) {
+                $registroEncontrado = $key;
+                break;
+            }
+        }
 
-    public function buscarConcepto(){
+        // Si se encuentra el registro, eliminarlo del array de registros
+        if ($registroEncontrado !== null) {
+            unset($registros[$registroEncontrado]);
 
+            // Reindexar el array para evitar posibles inconsistencias de índices
+            $registros = array_values($registros);
+
+            // Escribir los registros actualizados de vuelta al archivo
+            $archivo = fopen("monedero.txt", "w");
+            foreach ($registros as $registro) {
+                fwrite($archivo, implode(",", $registro) . "\n");
+            }
+            fclose($archivo);
+        }
     }
-	
 
 }

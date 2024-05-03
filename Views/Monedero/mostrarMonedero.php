@@ -7,9 +7,7 @@
 
     // Llamar al método mostrarMonedero() del controlador para mostrar los registros
     $monederoController->mostrarMonedero();
-    
   
-
     ?>
 
 <!DOCTYPE html>
@@ -52,9 +50,6 @@
     </tr>
 <?php endforeach; ?>
 
- 
-                
-        
         <form action="index.php?action=guardarRegistro" method="POST">
             <td>
                 <input type="text" name="concepto" placeholder="Concepto">
