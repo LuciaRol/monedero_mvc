@@ -84,13 +84,12 @@
     
     <div id="">
         <div id="">
-            <p>El numero total de registros es: </p>
-           
-            <p>El balance total es de &euro;</p>
+            <p>El numero total de registros es: <?= $monederoController->contarTotalRegistros() ?></p>
+        
+            <p>El balance total es de &euro;<?= $monederoController->calcularBalanceTotal() ?></p>
         </div>
-        <button><a href="index.php?action=verTodasAnotaciones">Ver todas las anotaciones</a></button>
-
-    </div>
+    <button><a href="index.php?action=verTodasAnotaciones">Ver todas las anotaciones</a></button>
+</div>
 
 </body>
 
