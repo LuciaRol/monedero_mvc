@@ -230,21 +230,27 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
     }
 
     public static function sanearFecha($fecha): ?string {
-        // Intentamos convertir la fecha a un formato UNIX timestamp
-        $timestamp = strtotime($fecha);
-    
-        // Verificamos si se pudo convertir correctamente
-        if ($timestamp !== false) {
-            // Creamos un objeto DateTime utilizando el timestamp
-            $fecha_parseada = new DateTime();
-            $fecha_parseada->setTimestamp($timestamp);
-    
-            // Devolvemos la fecha formateada como 'd-m-Y'
-            return $fecha_parseada->format('d-m-Y');
-        } else {
-            // Si la conversión falla, devolvemos null
-            return null;
+        // Verificamos si la fecha tiene el formato correcto
+        if (preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/', $fecha, $matches)) {
+            // Intentamos convertir la fecha a un formato UNIX timestamp
+            $dia = $matches[1];
+            $mes = $matches[2];
+            $anio = $matches[3];
+            
+            // Verificamos si la fecha es válida
+            if (checkdate($mes, $dia, $anio)) {
+                // Creamos un objeto DateTime utilizando el timestamp
+                $timestamp = strtotime("$anio-$mes-$dia");
+                $fecha_parseada = new DateTime();
+                $fecha_parseada->setTimestamp($timestamp);
+        
+                // Devolvemos la fecha formateada como 'd-m-Y'
+                return $fecha_parseada->format('d-m-Y');
+            }
         }
+        
+        // Si la fecha no tiene el formato correcto o no es válida, devolvemos null
+        return null;
     }
 
     // Función para ordenar los registros
