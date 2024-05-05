@@ -186,9 +186,9 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
         }
     
          // Comprobamos si la fecha tiene un formato válido ('d/m/aaaa')
-        $fechaParts = explode('/', $fecha);
-        if (count($fechaParts) !== 3 || !checkdate($fechaParts[1], $fechaParts[0], $fechaParts[2])) {
-            $errores[] = "No se puede dar de alta el registro: la fecha debe tener el formato 'd/m/aaaa'.";
+        $fechaParts = explode('-', $fecha);
+        if (count($fechaParts) !== 3 || !checkdate($fechaParts[1], $fechaParts[0], $fechaParts[2])) { //Para ordenar correctamente la fecha cambiamos el orden de fechaParts
+            $errores[] = "No se puede dar de alta el registro: la fecha debe tener el formato 'd-m-aaaa'.";
         }
         // Comprobamos si el importe es un número válido
         if (!is_numeric($importe)) {
@@ -229,7 +229,7 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
         return preg_replace('/[^A-Za-z0-9\s]+/', '', $texto);
     }
 
-    public static function sanearFecha($fecha): string {
+    public static function sanearFecha($fecha): ?string {
         // Intentamos convertir la fecha a un formato UNIX timestamp
         $timestamp = strtotime($fecha);
     
@@ -239,11 +239,11 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
             $fecha_parseada = new DateTime();
             $fecha_parseada->setTimestamp($timestamp);
     
-            // Devolvemos la fecha formateada como 'YYYY-MM-DD'
-            return $fecha_parseada->format('Y-m-d');
+            // Devolvemos la fecha formateada como 'd-m-Y'
+            return $fecha_parseada->format('d-m-Y');
         } else {
-            // Si la conversión falla, devolvemos una cadena vacía
-            return '';
+            // Si la conversión falla, devolvemos null
+            return null;
         }
     }
 }

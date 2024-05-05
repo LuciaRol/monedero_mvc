@@ -16,13 +16,13 @@ class MonederoController {
     }
     public function guardarRegistro(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
-            // Obtener los datos del formulario
-            $concepto = $_POST["concepto"];
-            $fecha = $_POST["fecha"];
-            $importe = $_POST["importe"];
+             // Obtener los datos del formulario y los saneamos
+            $datosSaneados = Monedero::sanearCampos($_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
             
-            // Aquí tiene que ir el saneamiento
-            // Monedero::sanearCampos($concepto, $fecha, $importe);
+            // Actualizar los campos concepto, fecha e importe con los valores saneados
+            $concepto = $datosSaneados['concepto'];
+            $fecha = $datosSaneados['fecha'];
+            $importe = $datosSaneados['importe'];
 
 
             // Aquí tiene que ir toda la validación 
