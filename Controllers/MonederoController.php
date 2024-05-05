@@ -5,12 +5,15 @@ use Lib\Pages;
 use Models\Monedero;
 class MonederoController {
     public function mostrarMonedero(array $errores = null): void {
+        // Obtener el valor de $orden de $_GET
+        $orden = isset($_GET['orden']) ? $_GET['orden'] : null;
+        
         // Leer los datos del archivo monedero.txt
         $registros = monedero::leerRegistros();
         
         // Ordenar los registros según el valor de $orden
-        $registros = monedero::ordenarRegistros($registros);
-        
+        $registros = monedero::ordenarRegistros($registros, $orden);
+
         // Instanciar la clase Pages para renderizar la vista
         $pagina = new Pages();
         $pagina->render("mostrarMonedero", ['registros' => $registros, 'errores' => $errores]);

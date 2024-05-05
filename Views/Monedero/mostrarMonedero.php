@@ -93,7 +93,8 @@
         
             <p>El balance total es de &euro;<?= $monederoController->calcularBalanceTotal() ?></p>
         </div>
-    <button><a href="index.php?action=mostrarMonedero">Ver todas las anotaciones</a></button>
+    <button><a href="index.php?action=mostrarMonedero&orden=">Ver todas las anotaciones</a></button> 
+    <!-- No asignamos valor a orden para volver al original de monedero.txt -->
 </div>
 
 </body>

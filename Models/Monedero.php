@@ -254,10 +254,8 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
     }
 
     // Función para ordenar los registros
-    public static function ordenarRegistros($registros) {
-        // obtenemos si se ha dado a orden
-        $orden = isset($_GET['orden']) ? $_GET['orden'] : null;
-        
+    public static function ordenarRegistros($registros, $orden) {
+                
         // Ordenar los registros según la variable $orden
         if ($orden === 'concepto') {
             // Ordenar por concepto (sin distinción entre mayúsculas y minúsculas)
