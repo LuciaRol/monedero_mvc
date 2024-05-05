@@ -185,9 +185,9 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
             $errores['concepto'] = "No se puede dar de alta el registro: es obligatorio introducir el concepto";
         }
     
-         // Comprobamos si la fecha tiene un formato válido ('d/m/aaaa')
+         // Comprobamos si la fecha tiene un formato válido ('d-m-aaaa')
         $fechaParts = explode('-', $fecha);
-        if (count($fechaParts) !== 3 || !checkdate($fechaParts[1], $fechaParts[0], $fechaParts[2])) { //Para ordenar correctamente la fecha cambiamos el orden de fechaParts
+        if (count($fechaParts) !== 3 || !checkdate($fechaParts[1], $fechaParts[0], $fechaParts[2])) { //Para ordenar correctamente la fecha con la funcion (m/d/yyyy)
             $errores[] = "No se puede dar de alta el registro: la fecha debe tener el formato 'd-m-aaaa'.";
         }
         // Comprobamos si el importe es un número válido
@@ -245,5 +245,37 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
             // Si la conversión falla, devolvemos null
             return null;
         }
+    }
+
+    // Función para ordenar los registros
+    public static function ordenarRegistros($registros) {
+        // obtenemos si se ha dado a orden
+        $orden = isset($_GET['orden']) ? $_GET['orden'] : null;
+        
+        // Ordenar los registros según la variable $orden
+        if ($orden === 'concepto') {
+            // Ordenar por concepto (sin distinción entre mayúsculas y minúsculas)
+            usort($registros, function($a, $b) {
+                // Convertir conceptos a minúsculas antes de comparar
+                $conceptoA = strtolower($a['concepto']);
+                $conceptoB = strtolower($b['concepto']);
+                // Comparar los conceptos
+                return strcmp($conceptoA, $conceptoB);
+            });
+        } elseif ($orden === 'fecha') {
+            // Ordenar por fecha
+            usort($registros, function($a, $b) {
+                // Convertir fechas a timestamps y comparar
+                return strtotime($a['fecha']) - strtotime($b['fecha']);
+            });
+        } elseif ($orden === 'importe') {
+            // Ordenar por importe
+            usort($registros, function($a, $b) {
+                // Comparar los importes
+                return $a['importe'] - $b['importe'];
+            });
+        }
+        
+        return $registros;
     }
 }

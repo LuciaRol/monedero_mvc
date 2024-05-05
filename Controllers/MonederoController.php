@@ -6,9 +6,10 @@ use Models\Monedero;
 class MonederoController {
     public function mostrarMonedero(array $errores = null): void {
         // Leer los datos del archivo monedero.txt
-        
         $registros = monedero::leerRegistros();
-
+        
+        // Ordenar los registros según el valor de $orden
+        $registros = monedero::ordenarRegistros($registros);
         
         // Instanciar la clase Pages para renderizar la vista
         $pagina = new Pages();
@@ -55,7 +56,7 @@ class MonederoController {
     // Redirigir al usuario de vuelta a la página mostrarMonedero.php después de borrar el registro
     self::mostrarMonedero();
     }
-
+    // Función para buscar un registro. Llama a la clase monedero donde se guarda la lógica sobre como buscar.
     public function buscarRegistro(): void {
         // Verificar si se ha enviado la consulta de búsqueda
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["buscar"])) {
@@ -70,12 +71,13 @@ class MonederoController {
             $pagina->render("mostrarMonedero", ['registros' => $resultados]);
         } 
     }
+    // Función controlador para contar el número de registros. Llama a la clase monedero donde se guarda la lógica sobre como contar los registros.
 
     public function contarTotalRegistros(): int {
         // Llamar a la función contarTotalRegistros() de Monedero
         return Monedero::contarTotalRegistros();
     }
-
+    // Función controlador para calcular el balance. Llama a la clase monedero donde se guarda la lógica sobre como calcular el balance.
     public function calcularBalanceTotal(): float {
         // Llamar a la función calcularBalanceTotal() de Monedero
         return Monedero::calcularBalanceTotal();

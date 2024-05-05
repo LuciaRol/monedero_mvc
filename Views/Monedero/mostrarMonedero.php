@@ -24,9 +24,9 @@
     
     <table>
     <tr>
-    <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Concepto</a></th>
-    <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Fecha</a></th>
-    <th><a href="<?= BASE_URL ?>controller=Monedero&action=">Importe (&euro;)</a></th>
+    <th><a href="index.php?action=mostrarMonedero&orden=concepto">Concepto</a></th>
+    <th><a href="index.php?action=mostrarMonedero&orden=fecha">Fecha</a></th>
+    <th><a href="index.php?action=mostrarMonedero&orden=importe">Importe (&euro;)</a></th>
     <th>Operaciones</th>
 </tr>
 
