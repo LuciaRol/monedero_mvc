@@ -5,8 +5,7 @@
     // Crear una instancia del controlador
     $monederoController = new MonederoController();
 
-    // Llamar al método mostrarMonedero() del controlador para mostrar los registros
-    $monederoController->mostrarMonedero();
+    
   
     ?>
 
