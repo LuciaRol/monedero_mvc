@@ -230,8 +230,8 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
     }
 
     public static function sanearFecha($fecha): ?string {
-        // Verificamos si la fecha tiene el formato correcto
-        if (preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/', $fecha, $matches)) {
+        // Verificamos si la fecha tiene el formato correcto ('dd/mm/yyyy' o 'dd-mm-yyyy')
+    if (preg_match('/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/', $fecha, $matches)) {
             // Intentamos convertir la fecha a un formato UNIX timestamp
             $dia = $matches[1];
             $mes = $matches[2];
