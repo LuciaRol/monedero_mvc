@@ -59,12 +59,7 @@ class MonederoController {
     // Redirigir al usuario de vuelta a la página mostrarMonedero.php después de borrar el registro
     self::mostrarMonedero();
     }
-
-    // Función para modificar un registro ya insertado
-    public function editarRegistro(){
-        $pagina = new Pages();
-        $pagina->render('Monedero/mostrarEditar');
-    }
+    
     // Función para buscar un registro. Llama a la clase monedero donde se guarda la lógica sobre como buscar.
     public function buscarRegistro(): void {
         // Verificar si se ha enviado la consulta de búsqueda
@@ -91,5 +86,9 @@ class MonederoController {
         // Llamar a la función calcularBalanceTotal() de Monedero
         return Monedero::calcularBalanceTotal();
     }
+
+
+
+    
 
 }

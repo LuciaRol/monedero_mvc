@@ -33,8 +33,8 @@
             <td><?= $registro['importe'] ?></td>
             <td>
                 <div class="btn-container">
-                    <form action="<?= BASE_URL ?>controller=Monedero&action=" method="post">
-                        <button class="btn" name="editar" value="<?= $array['id'] ?>">Editar</button>
+                    <form action="<?= BASE_URL ?>controller=Monedero&action=cargarEditar" method="post">
+                        <button class="btn" name="editar" value="<?= $registro['id'] ?>">Editar</button>
                     </form>
                     <form action="index.php?action=borrarRegistro" method="POST">
                         <button class="btn" name="borrar" value="<?= $registro['id'] ?>">Borrar</button>
