@@ -24,7 +24,7 @@ body {
 
 }
 header {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -41,7 +41,7 @@ header img {
 }
 
 table{
-	margin-top: 2rem;;
+	margin-top: 8rem;;
 }
 
 table,

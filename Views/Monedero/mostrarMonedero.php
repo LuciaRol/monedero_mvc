@@ -14,6 +14,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monedero</title>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtener todos los botones de "Editar"
+        var editarBotones = document.querySelectorAll('.editar-btn');
+
+        // Iterar sobre cada botón de "Editar"
+        editarBotones.forEach(function(boton) {
+            boton.addEventListener('click', function() {
+                // Obtener el ID del registro correspondiente al botón de "Editar" actual
+                var idRegistro = this.getAttribute('data-id');
+
+                // Ocultar todos los campos de edición
+                var camposEdicion = document.querySelectorAll('.edicion-campos');
+                camposEdicion.forEach(function(campos) {
+                    campos.style.display = 'none';
+                });
+
+                // Mostrar los campos de edición correspondientes al ID del registro
+                var camposEdicionID = document.querySelector('.edicion-campos[data-id="' + idRegistro + '"]');
+                camposEdicionID.style.display = 'table-row';
+            });
+        });
+    });
+</script>
+
 </head>
 
 <body>       
@@ -33,16 +58,26 @@
             <td><?= $registro['importe'] ?></td>
             <td>
                 <div class="btn-container">
-                    <form action="<?= BASE_URL ?>controller=Monedero&action=cargarEditar" method="post">
-                        <button class="btn" name="editar" value="<?= $registro['id'] ?>">Editar</button>
-                    </form>
+                    <!-- Dentro del bucle foreach para mostrar registros -->
+                    <button type="button" class="btn editar-btn" data-id="<?= $registro['id'] ?>">Editar</button>
+
                     <form action="index.php?action=borrarRegistro" method="POST">
                         <button class="btn" name="borrar" value="<?= $registro['id'] ?>">Borrar</button>
                     </form>
-                </div>
-                
+                </div>                
             </td>
         </tr>
+        <tr class="edicion-campos" style="display: none;">
+            <form action="index.php?action=modificarRegistro" method="post">
+                <!-- Campos ocultos para enviar el ID del registro -->
+                <input type="hidden" name="id" value="<?= $registro['id'] ?>">
+                <td><input type="text" name="concepto_editado" placeholder="Nuevo concepto"></td>
+                <td><input type="text" name="fecha_editada" placeholder="Nueva fecha"></td>
+                <td><input type="text" name="importe_editado" placeholder="Nuevo importe"></td>
+                <td><button type="submit" class="btn" name="editar">Guardar</button></td>
+            </form>
+        </tr>
+
     <?php endforeach; ?>
 
     <form action="index.php?action=guardarRegistro" method="POST">
@@ -95,6 +130,43 @@
     <!-- No asignamos valor a orden para volver al original de monedero.txt -->
 </div>
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Obtener todos los botones de "Editar"
+    var editarBotones = document.querySelectorAll('.editar-btn');
+
+    // Iterar sobre cada botón de "Editar"
+    editarBotones.forEach(function(boton) {
+        boton.addEventListener('click', function() {
+            // Obtener el ID del registro correspondiente al botón de "Editar" actual
+            var idRegistro = this.getAttribute('data-id');
+            console.log("ID del registro: ", idRegistro); // Añadido para depuración
+
+            // Ocultar todos los campos de edición
+            var camposEdicion = document.querySelectorAll('.edicion-campos');
+            camposEdicion.forEach(function(campos) {
+                campos.style.display = 'none';
+            });
+
+            // Mostrar los campos de edición correspondientes al ID del registro
+            var fila = this.closest('tr');
+            var camposEdicionID = fila.nextElementSibling;
+            camposEdicionID.style.display = 'table-row';
+        });
+    });
+});
+
+
+
+
+</script>
+
 </body>
 
 </html>
+
+
+
+
+

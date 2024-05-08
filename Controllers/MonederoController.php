@@ -72,7 +72,7 @@ class MonederoController {
     
            // Instanciar la clase Pages para renderizar la vista
             $pagina = new Pages();
-            $pagina->render("mostrarMonedero", ['registros' => $resultados]);
+            $pagina->render("Monedero/mostrarMonedero", ['registros' => $resultados]);
         } 
     }
     // Función controlador para contar el número de registros. Llama a la clase monedero donde se guarda la lógica sobre como contar los registros.
@@ -88,7 +88,36 @@ class MonederoController {
     }
 
 
+   // hay que validar y sanear de nuevo los campos que se meten
+
+        public function modificarRegistro(): void {
+            if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editar"])) {
+                // Obtener los datos del formulario
+                $id = $_POST["id"];
+                $nuevoConcepto = $_POST["concepto_editado"];
+                $nuevaFecha = $_POST["fecha_editada"];
+                $nuevoImporte = $_POST["importe_editado"];
+        
+                // Llamar al método editarRegistro de Monedero para actualizar el registro
+                Monedero::editarRegistro($id, $nuevoConcepto, $nuevaFecha, $nuevoImporte);
+        
+                // Redirigir de vuelta a la página mostrarMonedero.php después de editar el registro
+                self::mostrarMonedero();
+            }
+        }
+
+
+
+
+        
+}
+    
 
     
 
-}
+
+
+
+
+    
+

@@ -282,4 +282,37 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
         
         return $registros;
     }
+
+
+
+
+
+    public static function editarRegistro(int $id, string $nuevoConcepto, string $nuevaFecha, float $nuevoImporte): void {
+        // Leer los registros actuales del archivo
+        $registros = self::leerRegistros();
+    
+        // Buscar el registro con el ID proporcionado
+        $registroEncontrado = null;
+        foreach ($registros as $key => $registro) {
+            if ($registro['id'] == $id) {
+                $registroEncontrado = $key;
+                break;
+            }
+        }
+    
+        // Si se encuentra el registro, modificarlo con los nuevos datos
+        if ($registroEncontrado !== null) {
+            $registros[$registroEncontrado]['concepto'] = $nuevoConcepto;
+            $registros[$registroEncontrado]['fecha'] = $nuevaFecha;
+            $registros[$registroEncontrado]['importe'] = $nuevoImporte;
+    
+            // Escribir los registros actualizados de vuelta al archivo
+            $archivo = fopen("monedero.txt", "w");
+            foreach ($registros as $registro) {
+                fwrite($archivo, implode(",", $registro) . "\n");
+            }
+            fclose($archivo);
+        }
+    }
+    
 }
