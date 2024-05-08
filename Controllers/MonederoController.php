@@ -4,6 +4,16 @@ namespace Controllers;
 use Lib\Pages;
 use Models\Monedero;
 class MonederoController {
+
+    private Pages $pagina;
+
+    public function __construct()
+    {
+        // Crea una nueva Pages
+        $this->pagina = new Pages();
+    }
+
+
     public function mostrarMonedero(array $errores = null): void {
         // Obtener el valor de $orden de $_GET
         $orden = isset($_GET['orden']) ? $_GET['orden'] : null;
@@ -15,8 +25,7 @@ class MonederoController {
         $registros = monedero::ordenarRegistros($registros, $orden);
 
         // Instanciar la clase Pages para renderizar la vista
-        $pagina = new Pages();
-        $pagina->render("Monedero/mostrarMonedero", ['registros' => $registros, 'errores' => $errores]);
+        $this->pagina->render("Monedero/mostrarMonedero", ['registros' => $registros, 'errores' => $errores]);
     }
     public function guardarRegistro(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
@@ -80,7 +89,7 @@ class MonederoController {
     
             // Si hay errores de validación, mostrar los mensajes de error y detener el proceso
             if ($errores !== null) {
-                $this->mostrarMonedero($errores); // Pasar los mensajes de error a la vista
+                self::mostrarMonedero($errores); // Pasar los mensajes de error a la vista
                 return;
             }
     
@@ -104,8 +113,7 @@ class MonederoController {
             $resultados = Monedero::buscarRegistros($terminoBusqueda);
     
            // Instanciar la clase Pages para renderizar la vista
-            $pagina = new Pages();
-            $pagina->render("Monedero/mostrarMonedero", ['registros' => $resultados]);
+           $this->pagina->render("Monedero/mostrarMonedero", ['registros' => $resultados]);
         } 
     }
     // Función controlador para contar el número de registros. Llama a la clase monedero donde se guarda la lógica sobre como contar los registros.
