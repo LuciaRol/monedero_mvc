@@ -59,6 +59,39 @@ class MonederoController {
     // Redirigir al usuario de vuelta a la página mostrarMonedero.php después de borrar el registro
     self::mostrarMonedero();
     }
+
+    // Función para editar un registro
+    public function modificarRegistro(): void {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editar"])) {
+            // Obtener los datos del formulario
+            $id = $_POST["id"];
+            $nuevoConcepto = $_POST["concepto_editado"];
+            $nuevaFecha = $_POST["fecha_editada"];
+            $nuevoImporte = $_POST["importe_editado"];
+    
+            // Saneamos los datos del formulario
+            $datosSaneados = Monedero::sanearCampos($nuevoConcepto, $nuevaFecha, $nuevoImporte);
+            $nuevoConcepto = $datosSaneados['concepto'];
+            $nuevaFecha = $datosSaneados['fecha'];
+            $nuevoImporte = $datosSaneados['importe'];
+    
+            // Validamos los datos
+            $errores = Monedero::validacion($nuevoConcepto, $nuevaFecha, $nuevoImporte);
+    
+            // Si hay errores de validación, mostrar los mensajes de error y detener el proceso
+            if ($errores !== null) {
+                $this->mostrarMonedero($errores); // Pasar los mensajes de error a la vista
+                return;
+            }
+    
+            // Llamar al método editarRegistro de Monedero para actualizar el registro
+            Monedero::editarRegistro($id, $nuevoConcepto, $nuevaFecha, $nuevoImporte);
+    
+            // Redirigir de vuelta a la vista mostrarMonedero.php después de editar el registro
+            self::mostrarMonedero();
+        }
+    }
+    
     
     // Función para buscar un registro. Llama a la clase monedero donde se guarda la lógica sobre como buscar.
     public function buscarRegistro(): void {
@@ -88,23 +121,8 @@ class MonederoController {
     }
 
 
-   // hay que validar y sanear de nuevo los campos que se meten
 
-        public function modificarRegistro(): void {
-            if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editar"])) {
-                // Obtener los datos del formulario
-                $id = $_POST["id"];
-                $nuevoConcepto = $_POST["concepto_editado"];
-                $nuevaFecha = $_POST["fecha_editada"];
-                $nuevoImporte = $_POST["importe_editado"];
         
-                // Llamar al método editarRegistro de Monedero para actualizar el registro
-                Monedero::editarRegistro($id, $nuevoConcepto, $nuevaFecha, $nuevoImporte);
-        
-                // Redirigir de vuelta a la página mostrarMonedero.php después de editar el registro
-                self::mostrarMonedero();
-            }
-        }
 
 
 
