@@ -225,9 +225,10 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
     
     // Función para sanear strings
     public static function sanearString(string $texto): string {
-        // Filtrar solo letras (mayúsculas y minúsculas), números y espacios, eliminando otros caracteres
-        return preg_replace('/[^A-Za-z0-9\s]+/', '', $texto);
+        // Filtrar solo letras (mayúsculas y minúsculas), números, ñ, vocales acentuadas y espacios, eliminando otros caracteres
+        return preg_replace('/[^A-Za-z0-9\sáéíóúÁÉÍÓÚñÑÁÉÍÓÚáéíóú]+/u', '', $texto);
     }
+    
 
     public static function sanearFecha($fecha): ?string {
         // Verificamos si la fecha tiene el formato correcto ('dd/mm/yyyy' o 'dd-mm-yyyy')
@@ -285,8 +286,6 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
 
 
 
-
-
     public static function editarRegistro(int $id, string $nuevoConcepto, string $nuevaFecha, float $nuevoImporte): void {
         // Leer los registros actuales del archivo
         $registros = self::leerRegistros();
@@ -300,7 +299,7 @@ public function __construct(string $concepto, string $fecha, float $importe, arr
             }
         }
     
-        // Si se encuentra el registro, modificarlo con los nuevos datos
+        // Si se encuentra el registro, se modifica con los datos nuevos
         if ($registroEncontrado !== null) {
             $registros[$registroEncontrado]['concepto'] = $nuevoConcepto;
             $registros[$registroEncontrado]['fecha'] = $nuevaFecha;

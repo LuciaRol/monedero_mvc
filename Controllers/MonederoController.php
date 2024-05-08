@@ -63,19 +63,19 @@ class MonederoController {
     // Función para editar un registro
     public function modificarRegistro(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editar"])) {
-            // Obtener los datos del formulario
+            // Obtener los datos del formulario para editar
             $id = $_POST["id"];
             $nuevoConcepto = $_POST["concepto_editado"];
             $nuevaFecha = $_POST["fecha_editada"];
             $nuevoImporte = $_POST["importe_editado"];
     
-            // Saneamos los datos del formulario
+            // Saneamos los campos datos del formulario para editar
             $datosSaneados = Monedero::sanearCampos($nuevoConcepto, $nuevaFecha, $nuevoImporte);
             $nuevoConcepto = $datosSaneados['concepto'];
             $nuevaFecha = $datosSaneados['fecha'];
             $nuevoImporte = $datosSaneados['importe'];
     
-            // Validamos los datos
+            // Validamos los nuevos datos
             $errores = Monedero::validacion($nuevoConcepto, $nuevaFecha, $nuevoImporte);
     
             // Si hay errores de validación, mostrar los mensajes de error y detener el proceso
