@@ -11,7 +11,7 @@ class Pages {
         }
 
         require_once 'Views/layout/header.php';
-        require_once "Views/Monedero/$pageName.php"; 
+        require_once "Views/$pageName.php"; 
         require_once 'Views/layout/footer.php';
 
     }

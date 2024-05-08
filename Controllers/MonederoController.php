@@ -16,7 +16,7 @@ class MonederoController {
 
         // Instanciar la clase Pages para renderizar la vista
         $pagina = new Pages();
-        $pagina->render("mostrarMonedero", ['registros' => $registros, 'errores' => $errores]);
+        $pagina->render("Monedero/mostrarMonedero", ['registros' => $registros, 'errores' => $errores]);
     }
     public function guardarRegistro(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
@@ -58,6 +58,12 @@ class MonederoController {
 
     // Redirigir al usuario de vuelta a la página mostrarMonedero.php después de borrar el registro
     self::mostrarMonedero();
+    }
+
+    // Función para modificar un registro ya insertado
+    public function editarRegistro(){
+        $pagina = new Pages();
+        $pagina->render('Monedero/mostrarEditar');
     }
     // Función para buscar un registro. Llama a la clase monedero donde se guarda la lógica sobre como buscar.
     public function buscarRegistro(): void {
