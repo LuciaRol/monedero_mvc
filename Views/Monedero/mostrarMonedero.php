@@ -14,31 +14,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monedero</title>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Obtener todos los botones de "Editar"
-        var editarBotones = document.querySelectorAll('.editar-btn');
-
-        // Iterar sobre cada botón de "Editar"
-        editarBotones.forEach(function(boton) {
-            boton.addEventListener('click', function() {
-                // Obtener el ID del registro correspondiente al botón de "Editar" actual
-                var idRegistro = this.getAttribute('data-id');
-
-                // Ocultar todos los campos de edición
-                var camposEdicion = document.querySelectorAll('.edicion-campos');
-                camposEdicion.forEach(function(campos) {
-                    campos.style.display = 'none';
-                });
-
-                // Mostrar los campos de edición correspondientes al ID del registro
-                var camposEdicionID = document.querySelector('.edicion-campos[data-id="' + idRegistro + '"]');
-                camposEdicionID.style.display = 'table-row';
-            });
-        });
-    });
-</script>
-
 </head>
 
 <body>       
@@ -130,18 +105,16 @@
     <!-- No asignamos valor a orden para volver al original de monedero.txt -->
 </div>
 
-
+<!-- SCRIPT JS PARA QUE SE MUESTRE EL FORMULARIO DE EDITAR CUANDO SE PULSA EL BOTÓN "EDITAR" -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    // Obtener todos los botones de "Editar"
     var editarBotones = document.querySelectorAll('.editar-btn');
 
-    // Iterar sobre cada botón de "Editar"
     editarBotones.forEach(function(boton) {
         boton.addEventListener('click', function() {
-            // Obtener el ID del registro correspondiente al botón de "Editar" actual
+            // Obtener el ID del registro correspondiente
             var idRegistro = this.getAttribute('data-id');
-            console.log("ID del registro: ", idRegistro); // Añadido para depuración
+            console.log("ID del registro: ", idRegistro);
 
             // Ocultar todos los campos de edición
             var camposEdicion = document.querySelectorAll('.edicion-campos');
@@ -153,13 +126,9 @@
             var fila = this.closest('tr');
             var camposEdicionID = fila.nextElementSibling;
             camposEdicionID.style.display = 'table-row';
+            });
         });
     });
-});
-
-
-
-
 </script>
 
 </body>
